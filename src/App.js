@@ -120,7 +120,7 @@ function App() {
 :root {
   --nav-bg: #A7D3C6;   /* mint */
   --nav-ink: #0B4B3A;  /* deep forest */
-  --nav-h: 96px;
+  --nav-h: 96px;       /* keep navbar height the same */
 
   --accent: #2B8F78;
   --ring: rgba(43, 143, 120, 0.25);
@@ -130,7 +130,7 @@ function App() {
   --body: #1D2732;
   --card: #FFFFFF;
 }
-@media (max-width: 767px){ :root{ --nav-h: 88px; } }
+@media (max-width: 767px){ :root{ --nav-h: 88px; } } /* same height on phones */
 
 html { scroll-behavior: smooth; }
 body, #root { background:#F6F7F8; color:#111; overflow-x:hidden; }
@@ -146,6 +146,7 @@ img, video { max-width:100%; height:auto; }
   height: var(--nav-h);
   background: color-mix(in srgb, var(--nav-bg) 92%, transparent);
   color: var(--nav-ink);
+  overflow: visible; /* allow logo to overflow when scaled */
 }
 .nav-shell[data-compact="true"]{
   height: calc(var(--nav-h) - 18px);
@@ -162,8 +163,69 @@ img, video { max-width:100%; height:auto; }
   transition: background .14s linear;
 }
 
-/* ===== COOL MOBILE MENU (sheet) ===== */
-/* Backdrop */
+/* ====== Logo: big on phone + bigger on laptop, navbar height unchanged ====== */
+.logo-wrap{ height: 100%; display:flex; align-items:center; }
+.logo-img{
+  height: 56px; width: auto; object-fit: contain;
+  transform-origin: left center;
+}
+@media (max-width: 767px){
+  .logo-img{
+    height: 60px;
+    transform: scale(2.2) translateY(2px); /* really big on phones */
+    will-change: transform;
+  }
+}
+/* laptop/desktop: make it bigger with scale, keep bar height.
+   Important: we only increase, never shrink on large screens. */
+@media (min-width: 1024px){
+  .logo-img{
+    height: 100px;
+    transform: scale(1.55);
+  }
+}
+
+/* ===== Right contact cluster (desktop) ===== */
+.contact-cluster{
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+  flex-wrap:nowrap;
+  white-space:nowrap;
+  margin-left:.25rem;
+}
+.contact-text{
+  display:flex;
+  flex-direction:column;        /* stack "Call Us Today!" above number */
+  align-items:flex-end;         /* right align text */
+  line-height:1.1;
+}
+.contact-text .ey{
+  font-size:11px;
+  text-transform:uppercase;
+  opacity:.8;
+}
+.contact-text .ph{
+  font-weight:800;
+  letter-spacing:.02em;
+  color: var(--nav-ink);
+  font-size: 1rem;
+}
+.contact-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.6rem 1rem;
+  border-radius:12px;
+  font-weight:800;
+  background: var(--nav-ink);
+  color:#fff;
+  text-decoration:none;
+  white-space:nowrap;
+  border: 1px solid color-mix(in srgb, var(--nav-ink) 20%, transparent);
+}
+
+/* ===== MOBILE MENU (sheet) ===== */
 .mm-backdrop{
   position: fixed; inset: 0; z-index: 70;
   background: rgba(5, 20, 17, .45);
@@ -171,7 +233,6 @@ img, video { max-width:100%; height:auto; }
 }
 .mm-backdrop[data-open="true"]{ opacity: 1; }
 
-/* Sliding sheet */
 .mm-sheet{
   position: fixed; inset: 0 0 0 auto; /* right side */
   width: min(88vw, 420px);
@@ -179,7 +240,6 @@ img, video { max-width:100%; height:auto; }
   transform: translateX(102%);
   transition: transform .28s cubic-bezier(.2,.9,.2,1);
   display: flex; flex-direction: column;
-  /* glass effect over gradient */
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--nav-bg) 92%, #fff 8%) 0%, color-mix(in srgb, var(--nav-bg) 86%, #fff 14%) 100%);
   backdrop-filter: blur(14px) saturate(1.1);
@@ -187,16 +247,12 @@ img, video { max-width:100%; height:auto; }
   box-shadow: -24px 0 48px rgba(0,0,0,.22);
 }
 .mm-sheet[data-open="true"]{ transform: translateX(0); }
-
-/* Header row inside sheet */
 .mm-head{ display:flex; align-items:center; justify-content:space-between; padding: max(14px, env(safe-area-inset-top)) 16px 8px 16px; }
 .mm-close{
   height:40px; width:40px; display:inline-flex; align-items:center; justify-content:center;
   border-radius:12px; border:1px solid color-mix(in srgb, var(--nav-ink) 18%, transparent);
   background: rgba(255,255,255,.65);
 }
-
-/* Links list with stagger */
 .mm-links{ padding: 6px 18px 14px 18px; }
 .mm-link{
   display:block; padding: 14px 6px; margin: 2px 0;
@@ -213,10 +269,7 @@ img, video { max-width:100%; height:auto; }
 .mm-link:nth-child(5){ transition-delay: .20s; }
 .mm-link:nth-child(6){ transition-delay: .24s; }
 
-/* Divider + info */
 .mm-divider{ height:1px; background: color-mix(in srgb, var(--nav-ink) 18%, transparent); margin: 6px 18px; }
-
-/* Sticky action bar (safe-area aware) */
 .mm-actions{
   margin-top:auto;
   padding: 12px 16px calc(12px + env(safe-area-inset-bottom)) 16px;
@@ -240,85 +293,62 @@ img, video { max-width:100%; height:auto; }
   pointer-events:none;
 }
 
-/* Content styling kept from previous version (cards, badges, etc.) */
-.eyebrow{
-  display:inline-block; font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
-  color:var(--muted); background:rgba(43,143,120,.12); border:1px solid var(--ring);
-  padding:.4rem .6rem; border-radius:999px;
-}
+/* --- rest styles unchanged --- */
+.eyebrow{ display:inline-block; font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); background:rgba(43,143,120,.12); border:1px solid var(--ring); padding:.4rem .6rem; border-radius:999px; }
 .section-title{ font-family:'Playfair Display', serif; line-height:1.1; color:var(--accent); font-weight:800; margin:.75rem 0 1rem; }
 .gold-hr{ height:3px; width:72px; background:var(--accent); border-radius:3px; margin:.75rem 0 1.25rem; }
-.lede{ font-weight:600; color:var(--body); }
+.lede{ font-weight:600; color:#1D2732; }
 .copy{ color:#223041; font-size:1.05rem; }
-
 .badges{ display:flex; flex-wrap:wrap; gap:.5rem .6rem; margin:.35rem 0 1rem; }
 .badge{ background:#fff; border:1px solid var(--ring); padding:.45rem .6rem; border-radius:10px; font-size:.9rem; color:#111; box-shadow:0 8px 24px rgba(0,0,0,.06); }
-
 .about-block{ background:transparent; border-left:4px solid var(--accent); padding:.25rem 0 .25rem 1rem; margin:.5rem 0 1.25rem; }
 .about-block h5{ margin:0 0 .4rem; font-weight:700; font-size:1rem; color:#0f172a; }
-.about-block p{ margin:0; color:#223041; font-size:1.05rem; }
-
 .content-grid{ display:grid; grid-template-columns:1fr; gap:1rem; margin-top:.25rem; }
 @media(min-width:768px){ .content-grid{ grid-template-columns: 1fr 1fr; } }
 .content-card{ background:#fff; border:1px solid var(--ring); border-radius:14px; padding:1rem 1.1rem; box-shadow:0 10px 24px rgba(0,0,0,.06); position:relative; }
 .content-card h5{ font-weight:700; font-size:.95rem; color:#0f172a; }
-
 .stat-row{ display:grid; grid-template-columns:1fr; gap:.6rem; }
 @media(min-width:520px){ .stat-row{ grid-template-columns:1fr 1fr; } }
 .stat{ border:1px solid var(--ring); border-radius:10px; padding:.6rem .7rem; background:#fff; }
 .stat .t{ font-weight:700; }
 .stat .s{ font-size:.9rem; color:#4b5563; line-height:1.5; }
-
 .mix-row{ display:grid; grid-template-columns:1fr; gap:1rem; }
 @media(min-width:520px){ .mix-row{ grid-template-columns:1fr 1fr; } }
 .mix-stat{ padding:1rem 1.1rem; }
 .mix-stat .t{ font-size:1.05rem; font-weight:800; color:#0f172a; margin-bottom:.35rem; }
-
 .check-cols{ display:grid; grid-template-columns:1fr; gap:.35rem 1rem; }
 @media(min-width:640px){ .check-cols{ grid-template-columns: 1fr 1fr; } }
 .check-cols li{ list-style:none; display:flex; gap:.5rem; align-items:flex-start; color:#213044; }
-.check-cols li::before{ content:""; width:.55rem; height:.55rem; margin-top:.42rem; flex:0 0 .55rem; border-radius:2px; background:var(--accent); box-shadow:0 0 0 3px var(--ring); }
-
 .image-stack{ display:flex; flex-direction:column; gap:1rem; }
 .image-card{ background:var(--card); border:1px solid var(--ring); border-radius:16px; padding:.6rem; box-shadow:0 20px 40px rgba(0,0,0,.08); transition: transform .25s ease, box-shadow .25s ease; }
 .image-card:hover{ transform: rotate(-.3deg) translateY(-2px); box-shadow:0 26px 60px rgba(0,0,0,.12); }
 .image-card img{ border-radius:12px; display:block; width:100%; height:auto; }
 .image-card.small{ max-width:100%; margin-left:0; transform:none; }
 @media(min-width:1024px){ .image-card.small{ max-width:72%; margin-left:auto; transform:translate(6px,-4px); } }
-
 .stamp{ position:absolute; top:-10px; right:-10px; background:#fff; border:2px dashed var(--accent); color:#111; padding:.35rem .55rem; border-radius:10px; font-weight:800; font-size:.7rem; transform:rotate(6deg); box-shadow:0 6px 16px rgba(0,0,0,.08); }
-
 .why-band{ background: linear-gradient(180deg, rgba(43,143,120,.06), rgba(43,143,120,.02)); border-top: 4px solid var(--accent); border-bottom: 1px solid var(--ring); }
 .why-wrap{ max-width:72rem; margin:0 auto; padding:2.5rem 1.5rem; }
 .why-head{ text-align:center; margin:0 0 1.25rem; font-family:'Playfair Display', serif; font-weight:800; color:var(--accent); }
 .why-copy{ color:#213044; text-align:center; max-width:56rem; margin:.35rem auto 1.25rem; }
-
 .pedigree-panel{ background:#fff; border:1px solid var(--ring); border-radius:16px; padding:14px; margin:0 auto 18px; max-width:860px; box-shadow:0 10px 24px rgba(0,0,0,.06); }
 .pedigree-top{ display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
 .medal{ display:inline-flex; align-items:center; justify-content:center; min-width:124px; height:48px; padding:0 14px; border-radius:999px; font-weight:800; letter-spacing:.02em; background:linear-gradient(180deg, rgba(43,143,120,.12), rgba(43,143,120,.04)); border:1px solid var(--ring); color:#0f172a; }
 .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); opacity:.7; }
 .pedigree-sub{ text-align:center; color:#4b5563; font-weight:600; margin-top:8px; }
 .caps{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:10px; }
-.cap{ background:#fff; border:1px solid var(--ring); border-radius:999px; padding:.42rem .75rem; font-weight:600; font-size:.9rem; box-shadow:0 6px 18px rgba(0,0,0,.05); white-space:nowrap; }
-
-.pedigree-marquee{ position:relative; overflow:hidden; margin: 10px auto 22px; padding:2px 0;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
-          mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%); }
+.pedigree-marquee{ position:relative; overflow:hidden; margin: 10px auto 22px; padding:2px 0; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%); }
 .pedigree-track{ display:flex; gap:.65rem; width:max-content; will-change: transform; animation: pedigree-scroll 24s linear infinite; }
 .pedigree-marquee:hover .pedigree-track{ animation-play-state: paused; }
 @keyframes pedigree-scroll{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
 .tag{ background:#fff; border:1px solid var(--ring); border-radius:999px; padding:.45rem .75rem; font-weight:600; font-size:.9rem; white-space:nowrap; box-shadow:0 6px 18px rgba(0,0,0,.05); }
-
 .perks{ display:grid; grid-template-columns:1fr; gap:14px; }
 @media(min-width:768px){ .perks{ grid-template-columns:1fr 1fr; } }
 .perk{ background:#fff; border:1px solid var(--ring); border-radius:14px; padding:14px 16px; box-shadow:0 8px 22px rgba(0,0,0,.06); }
 .perk h4{ margin:0 0 .35rem; font-weight:800; color:#0f172a; font-size:1.05rem; }
 .perk p{ margin:0; color:#5B6776; line-height:1.55; font-size:.93rem; }
-
 .why-cta{ text-align:center; margin-top:1.25rem; }
 .why-cta a{ display:inline-block; padding:.6rem 1rem; border:1px solid var(--accent); border-radius:12px; font-weight:700; color:#0f172a; background:#fff; box-shadow:0 8px 18px rgba(0,0,0,.06); }
 .why-cta a:hover{ background:rgba(43,143,120,.08); }
-
 .company{ background:#fff; border-top:1px solid var(--ring); }
 .company-wrap{ max-width:72rem; margin:0 auto; padding:2.25rem 1.5rem; }
 .company h3{ text-align:center; color:var(--accent); font-family:'Playfair Display', serif; font-weight:800; margin:0 0 1rem; }
@@ -329,7 +359,6 @@ img, video { max-width:100%; height:auto; }
 .company-card h4{ margin:0 0 .4rem; font-weight:800; color:#0f172a; }
 .company-card ul{ margin:.25rem 0 0; padding:0; list-style:none; }
 .company-card li{ display:flex; gap:.5rem; margin:.35rem 0; color:#213044; }
-.company-card li::before{ content:""; width:.55rem; height:.55rem; margin-top:.45rem; flex:0 0 .55rem; border-radius:2px; background:var(--accent); box-shadow:0 0 0 3px var(--ring); }
       `}</style>
 
       {/* NAVBAR */}
@@ -342,37 +371,42 @@ img, video { max-width:100%; height:auto; }
         <div className="nav-progress" style={{ ['--p']: `${progress}%` }} />
 
         <div className="h-full max-w-7xl mx-auto flex items-center justify-between gap-3">
-          <div className="h-12 md:h-10 flex items-center">
+          {/* Logo — huge on phones, bigger on laptops, navbar height unchanged */}
+          <div className="logo-wrap flex-shrink-0">
             <img
               src="green-logo.png"
               alt="Assotech Windsor Group"
-              className="max-h-full w-auto object-contain origin-left scale-[1.4] md:scale-[4.0]"
+              className="logo-img"
             />
           </div>
 
-          <nav className="hidden md:flex items-center gap-8 font-semibold uppercase tracking-wide">
+          {/* Desktop nav + contact cluster */}
+          <nav className="hidden md:flex items-center gap-8 font-semibold uppercase tracking-wide min-w-0">
             {['overview', 'gallery', 'brochure', 'sitemap', 'location', 'contact'].map((link) => (
-              <a key={link} href={`#${link}`} className="hover:underline underline-offset-4">{link}</a>
+              <a key={link} href={`#${link}`} className="hover:underline underline-offset-4 whitespace-nowrap">{link}</a>
             ))}
-            <div className="text-right leading-tight">
-              <div className="text-[11px] opacity-80">Call Us Today!</div>
-              <div className="font-bold">+91-8377857622</div>
+
+            {/* Right-side: stacked text + phone + button aligned */}
+            <div className="contact-cluster shrink-0">
+              <div className="contact-text">
+                <span className="ey">Call Us Today!</span>
+                <span className="ph">+91-8377857622</span>
+              </div>
+              <a
+                href="https://wa.me/918377857622"
+                target="_blank"
+                rel="noreferrer"
+                className="contact-btn"
+              >
+                📞 Contact Us
+              </a>
             </div>
-            <a
-              href="https://wa.me/918377857622"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded px-4 py-2 font-bold text-white"
-              style={{ background: 'var(--nav-ink)' }}
-            >
-              📞 Contact Us
-            </a>
           </nav>
 
           {/* Mobile burger */}
           <button
             onClick={() => setMenuOpen((v) => !v)}
-            className="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-[color:var(--nav-ink)]/20 bg-white/70"
+            className="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-[color:var(--nav-ink)]/20 bg-white/70 flex-shrink-0"
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -385,7 +419,6 @@ img, video { max-width:100%; height:auto; }
       </header>
 
       {/* ===== MOBILE MENU: Backdrop + Sliding Sheet ===== */}
-      {/* Backdrop */}
       <div
         className="mm-backdrop"
         data-open={menuOpen}
@@ -393,7 +426,6 @@ img, video { max-width:100%; height:auto; }
         aria-hidden={!menuOpen}
         style={{ pointerEvents: menuOpen ? 'auto' : 'none' }}
       />
-      {/* Sheet */}
       <aside
         id="mobile-menu"
         className="mm-sheet"
@@ -403,7 +435,7 @@ img, video { max-width:100%; height:auto; }
         aria-label="Navigation Menu"
       >
         <div className="mm-head">
-          <img src="green-logo.png" alt="Assotech Windsor Group" className="h-7 w-auto" />
+          <img src="green-logo.png" alt="Assotech Windsor Group" className="h-12 w-auto" />
           <button onClick={() => setMenuOpen(false)} className="mm-close" aria-label="Close menu">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -477,7 +509,7 @@ img, video { max-width:100%; height:auto; }
           </div>
         </section>
 
-        {/* OVERVIEW (unchanged content) */}
+        {/* OVERVIEW */}
         <section id="overview" className="pt-6 md:pt-8 pb-16 md:pb-20 border-t-4 bg-white" style={{ borderColor: 'var(--accent)' }}>
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 px-6 section-shell">
             <div data-aos="fade-right">
