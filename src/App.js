@@ -473,7 +473,7 @@ img, video { max-width:100%; height:auto; }
           </a>
           <a
             className="mm-btn primary"
-            href="https://wa.me/917566155505"
+            href="https://wa.me/918377857622"
             target="_blank"
             rel="noreferrer"
             onClick={() => setMenuOpen(false)}
@@ -827,7 +827,7 @@ img, video { max-width:100%; height:auto; }
       </main>
 
       {/* WhatsApp CTA */}
-      <a href="https://wa.me/917566155505" target="_blank" rel="noreferrer"
+      <a href="https://wa.me/918377857622" target="_blank" rel="noreferrer"
          className="fixed bottom-5 right-5 bg-green-600 text-white px-4 py-3 rounded-full shadow-lg z-30">
         📞 Chat on WhatsApp
       </a>
