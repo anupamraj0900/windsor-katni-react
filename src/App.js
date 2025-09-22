@@ -390,10 +390,10 @@ img, video { max-width:100%; height:auto; }
             <div className="contact-cluster shrink-0">
               <div className="contact-text">
                 <span className="ey">Call Us Today!</span>
-                <span className="ph">+91-8377857622</span>
+                <span className="ph">+91-9311967199</span>
               </div>
               <a
-                href="https://wa.me/918377857622"
+                href="https://wa.me/919311967199"
                 target="_blank"
                 rel="noreferrer"
                 className="contact-btn"
@@ -460,20 +460,20 @@ img, video { max-width:100%; height:auto; }
 
         <div style={{ padding: '6px 18px 10px' }}>
           <div style={{ fontSize:'12px', opacity:.75, color:'var(--nav-ink)' }}>Call Us Today!</div>
-          <div style={{ fontWeight:900, fontSize:'18px', color:'var(--nav-ink)' }}>+91-8377857622</div>
+          <div style={{ fontWeight:900, fontSize:'18px', color:'var(--nav-ink)' }}>+91-9311967199</div>
         </div>
 
         <div className="mm-actions">
           <a
             className="mm-btn"
-            href="tel:+918377857622"
+            href="tel:+919311967199"
             onClick={() => setMenuOpen(false)}
           >
             <span>Call</span>
           </a>
           <a
             className="mm-btn primary"
-            href="https://wa.me/918377857622"
+            href="https://wa.me/919311967199"
             target="_blank"
             rel="noreferrer"
             onClick={() => setMenuOpen(false)}
@@ -827,7 +827,7 @@ img, video { max-width:100%; height:auto; }
       </main>
 
       {/* WhatsApp CTA */}
-      <a href="https://wa.me/918377857622" target="_blank" rel="noreferrer"
+      <a href="https://wa.me/919311967199" target="_blank" rel="noreferrer"
          className="fixed bottom-5 right-5 bg-green-600 text-white px-4 py-3 rounded-full shadow-lg z-30">
         📞 Chat on WhatsApp
       </a>
