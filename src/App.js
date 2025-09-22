@@ -374,7 +374,7 @@ img, video { max-width:100%; height:auto; }
           {/* Logo — huge on phones, bigger on laptops, navbar height unchanged */}
           <div className="logo-wrap flex-shrink-0">
             <img
-              src="Windsor Heights Logo (1).png"
+              src="public/assets/Windsor Heights Logo (1).png"
               alt="Assotech Windsor Group"
               className="logo-img"
             />
@@ -435,7 +435,7 @@ img, video { max-width:100%; height:auto; }
         aria-label="Navigation Menu"
       >
         <div className="mm-head">
-          <img src="green-logo.png" alt="Assotech Windsor Group" className="h-12 w-auto" />
+          <img src="public/assets/Windsor Heights Logo (1).png" alt="Assotech Windsor Group" className="h-12 w-auto" />
           <button onClick={() => setMenuOpen(false)} className="mm-close" aria-label="Close menu">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
