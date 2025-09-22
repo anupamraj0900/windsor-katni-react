@@ -374,7 +374,7 @@ img, video { max-width:100%; height:auto; }
           {/* Logo — huge on phones, bigger on laptops, navbar height unchanged */}
           <div className="logo-wrap flex-shrink-0">
             <img
-              src="green-logo.png"
+              src="Windsor Heights Logo (1).png"
               alt="Assotech Windsor Group"
               className="logo-img"
             />
