@@ -118,7 +118,7 @@ function App() {
       {/* THEME + GLOBAL */}
       <style>{`
 :root {
-  --nav-bg: #A7D3C6;   /* mint */
+  --nav-bg: #FAFAF7;   /* mint */
   --nav-ink: #0B4B3A;  /* deep forest */
   --nav-h: 96px;       /* keep navbar height the same */
 
@@ -374,7 +374,7 @@ img, video { max-width:100%; height:auto; }
           {/* Logo — huge on phones, bigger on laptops, navbar height unchanged */}
           <div className="logo-wrap flex-shrink-0">
             <img
-              src="public/assets/Windsor Heights Logo (1).png"
+              src="/assets/Windsor_HeightsLogo.png"
               alt="Assotech Windsor Group"
               className="logo-img"
             />
@@ -435,7 +435,7 @@ img, video { max-width:100%; height:auto; }
         aria-label="Navigation Menu"
       >
         <div className="mm-head">
-          <img src="public/assets/Windsor Heights Logo (1).png" alt="Assotech Windsor Group" className="h-12 w-auto" />
+          <img src="/assets/Windsor_HeightsLogo.png" alt="Assotech Windsor Group" className="h-12 w-auto" />
           <button onClick={() => setMenuOpen(false)} className="mm-close" aria-label="Close menu">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -525,14 +525,24 @@ img, video { max-width:100%; height:auto; }
               </div>
 
               <div className="about-block" data-aos="fade-up" data-aos-delay="80">
-                <h5>About the Project</h5>
-                <p className="copy">
-                  Windsor Heights is a special government-backed residential township under <strong>Pradhan Mantri Awas Yojana (PMAY - AHP)</strong>.
-                  It is being developed with the <strong>Katni Municipal Corporation</strong> through the <strong>Public-Private Partnership (PPP)</strong> model.
-                  Built by <strong>Assotech Windsor LLP</strong>, the project focuses on strong construction quality, on-time delivery, and a safe, well-equipped community.
-                  It brings the comfort of modern living with trust, clear dealings, and long-term value.
-                </p>
-              </div>
+  <h5>About the Project</h5>
+  <p className="copy">
+    Windsor Heights Katni is the region’s first premium township, strategically located near the 
+    <strong> Jabalpur–Katni Highway</strong>, offering seamless connectivity while being nestled in a serene, green environment. 
+    Developed by  a company with <strong>25+ years of rich experience in Delhi NCR and across 5 states of India</strong>, 
+    the project combines elegant architecture, superior construction standards, and refined community living.
+  </p>
+  <p className="copy" style={{ marginTop: '0.75rem' }}>
+    For the first time in Katni, residents can experience an exclusive lifestyle with a modern clubhouse, 
+    fully equipped gymnasium, landscaped gardens, dedicated children’s play areas, and a swimming pool. 
+    Designed for discerning families, the township also ensures round-the-clock security, ample parking, 
+    and future-ready infrastructure.
+  </p>
+  <p className="copy" style={{ marginTop: '0.75rem' }}>
+    Windsor Heights is more than a residential address — it is a secure, vibrant community that blends comfort with luxury, 
+    setting a new benchmark for modern living in Katni.
+  </p>
+</div>
 
               <div className="content-grid">
                 <div className="content-card" data-aos="fade-up">
@@ -555,14 +565,17 @@ img, video { max-width:100%; height:auto; }
                 </div>
 
                 <div className="content-card" data-aos="fade-up" data-aos-delay="70">
-                  <h5>Construction Status</h5>
-                  <ul className="check-cols">
-                    <li>LIG-1: stilt + 6 floors complete</li>
-                    <li>MIG-1 up to the 5th floor</li>
-                    <li>Annexure-I/II schedule tracking</li>
-                    <li>Strict penalties on delays</li>
-                  </ul>
-                </div>
+  <h5>Construction Status</h5>
+  <ul style={{ listStyle: 'disc', paddingLeft: '1.2rem', lineHeight: '1.6' }}>
+    <li>Overall progress: <strong>50%+</strong> construction complete</li>
+    <li>LIG: All structures complete</li>
+    <li>MIG-1: 4 structures complete</li>
+    <li>Strict schedule tracking with penalties on delays</li>
+  </ul>
+</div>
+
+
+
 
                 <div className="content-card" data-aos="fade-up" data-aos-delay="140">
                   <h5>Lifestyle & Benefits</h5>
