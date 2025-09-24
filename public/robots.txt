@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /assets/brochure.pdf
+
 Sitemap: https://www.windsorheight.com/sitemap.xml
